@@ -1,0 +1,14 @@
+name: AutoMinecart
+main: com.gmail.uprial.autominecart.AutoMinecart
+version: 0.1.0
+api-version: 1.10
+commands:
+   autominecart:
+      description: Reload AutoMinecart config
+      usage: /autominecart help
+      permission:
+      permission-message:
+permissions:
+  autominecart.reload:
+        description: Gives access to AutoMinecart 'reload' command
+        default: op
