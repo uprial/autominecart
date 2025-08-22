@@ -2,6 +2,7 @@ package com.gmail.uprial.autominecart;
 
 import com.gmail.uprial.autominecart.common.CustomLogger;
 import com.gmail.uprial.autominecart.config.InvalidConfigException;
+import com.gmail.uprial.autominecart.listeners.MoveListener;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
@@ -24,6 +25,8 @@ public final class AutoMinecart extends JavaPlugin {
 
         consoleLogger = new CustomLogger(getLogger());
         autoMinecartConfig = loadConfig(getConfig(), consoleLogger);
+
+        getServer().getPluginManager().registerEvents(new MoveListener(this, consoleLogger), this);
 
         getCommand(COMMAND_NS).setExecutor(new AutoMinecartCommandExecutor(this));
         consoleLogger.info("Plugin enabled");

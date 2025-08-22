@@ -1,4 +1,4 @@
-![TBD Logo](images/TBD-logo.png)
+![AutoMinecart Logo](images/autominecart-logo.png)
 
 ## Compatibility
 
@@ -9,6 +9,16 @@ Tested on Spigot-1.21.
 A Minecraft (Bukkit) plugin that allows to minecarts to auto-build their rails
 
 ## Features
+
+If a chest minecart is moving on straight rails and there is a full block under the direction of movement.
+1. Look for a best pickaxe in the chest. 
+2. Look for a left-top rails in the chest. 
+3. If there is both the pickaxe and the rails, try to break two blocks with the pickaxe in the direction of movement - if can't, stop. 
+4. Put the rails on the lower broken block. 
+5. Check every 16th block: if there is a red torch and a powered rail inside the minecart, there is a full block under the right side - break the block, put the red torch instead of it, put the powered rail instead of the rails. 
+6. Drop broken blocks on the floor.
+
+![a minecraft picture a chest minecart stays on a railway with a pickaxe in direction of the railway](images/autominecart-promo.png)
 
 ## Commands
 
@@ -26,7 +36,7 @@ A Minecraft (Bukkit) plugin that allows to minecarts to auto-build their rails
 I will be happy to add some features or fix bugs. My mail: uprial@gmail.com.
 
 ## Useful links
-* [Project on GitHub](TBD)
+* [Project on GitHub](https://github.com/uprial/autominecart)
 * [Project on Bukkit Dev](TBD)
 * [Project on Spigot](TBD)
 
