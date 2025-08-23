@@ -339,9 +339,9 @@ public class MoveListener implements Listener {
 
     /*
         According to https://minecraft.wiki/w/Breaking#Blocks_by_hardness,
-        the most critical blocks have hardness at least 22.5.
+        the most critical blocks have hardness at least 4.5.
      */
-    private static final float MAX_BLOCK_HARDNESS = 20.0f;
+    private static final float MAX_BLOCK_HARDNESS = 4.6f;
 
     private static boolean breakBlock(final Block block, final Inventory inventory) {
         if (block.isEmpty() || block.isLiquid()) {
