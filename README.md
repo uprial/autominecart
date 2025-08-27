@@ -37,8 +37,8 @@ I will be happy to add some features or fix bugs. My mail: uprial@gmail.com.
 
 ## Useful links
 * [Project on GitHub](https://github.com/uprial/autominecart)
-* [Project on Bukkit Dev](TBD)
-* [Project on Spigot](TBD)
+* [Project on Bukkit Dev](https://legacy.curseforge.com/minecraft/bukkit-plugins/auto-minecart)
+* [Project on Spigot](https://www.spigotmc.org/resources/autominecart.128389/)
 
 ## Related projects
 * CustomBazookas: [Bukkit Dev](https://legacy.curseforge.com/minecraft/bukkit-plugins/custombazookas/) [GitHub](https://github.com/uprial/custombazookas), [Spigot](https://www.spigotmc.org/resources/custombazookas.124997/)
