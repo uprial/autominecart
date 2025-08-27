@@ -90,8 +90,7 @@ public class MoveListener implements Listener {
             .add(Material.POWERED_RAIL)
             .build();
 
-    // Our plugin has the last word on the world population.
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onVehicleMove(VehicleMoveEvent event) {
         if((plugin.getAutoMinecartConfig().isEnabled())
                 && (event.getVehicle() instanceof StorageMinecart)) {
