@@ -10,7 +10,7 @@
 #
 # This option can affect the performance.
 #
-debug: true
+debug: false
 
 #
 # Enable main features. Possible values: true | false (default = false)
