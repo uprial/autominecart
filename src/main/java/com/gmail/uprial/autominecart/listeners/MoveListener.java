@@ -109,8 +109,10 @@ public class MoveListener implements Listener {
                 if (RAIL_TYPES.contains(currentBlock.getType())) {
                     final Rail railDB = (Rail) currentBlock.getBlockData();
                     if (!getAllowedRailShapes(minecartDirection).contains(railDB.getShape())) {
-                        customLogger.debug(String.format("Wrong rail shape: %s-%s",
-                                format(currentBlock), railDB.getShape()));
+                        if(customLogger.isDebugMode()) {
+                            logDebug(String.format("Wrong rail shape: %s-%s",
+                                    format(currentBlock), railDB.getShape()));
+                        }
                         return;
                     }
                 }
@@ -138,8 +140,10 @@ public class MoveListener implements Listener {
 
                     final Block underUnderNextBlock = getBlockWithChangedY(nextBlock, -2);
                     if(!underUnderNextBlock.getType().isSolid()) {
-                        customLogger.debug(String.format("No solid surface for rails: %s and %s",
-                                format(underNextBlock), format(underUnderNextBlock)));
+                        if(customLogger.isDebugMode()) {
+                            logDebug(String.format("No solid surface for rails: %s and %s",
+                                    format(underNextBlock), format(underUnderNextBlock)));
+                        }
                         return;
                     } else {
                         nextBlock = underNextBlock;
@@ -162,8 +166,10 @@ public class MoveListener implements Listener {
 
             for(final Block blockIterator : Arrays.asList(nextBlock, aboveNextBlock)) {
                 if(!breakBlock(blockIterator, inventory)) {
-                    customLogger.debug(String.format("Can't break %s via %s for rails",
-                            format(blockIterator), format(inventory)));
+                    if(customLogger.isDebugMode()) {
+                        logDebug(String.format("Can't break %s via %s for rails",
+                                format(blockIterator), format(inventory)));
+                    }
                     return;
                 }
             }
@@ -183,22 +189,28 @@ public class MoveListener implements Listener {
 
                             final Block redstoneBlock = getDirectedBlock(nextBlock, poweredDirection);
                             if (RAIL_TYPES.contains(redstoneBlock.getType())) {
-                                customLogger.debug(String.format("Rails took the place for redstone torch: %s",
-                                        format(redstoneBlock)));
+                                if(customLogger.isDebugMode()) {
+                                    logDebug(String.format("Rails took the place for redstone torch: %s",
+                                            format(redstoneBlock)));
+                                }
                                 continue;
                             }
 
                             final Block underRedstoneBlock = getBlockWithChangedY(redstoneBlock, -1);
 
                             if (!underRedstoneBlock.getType().isSolid()) {
-                                customLogger.debug(String.format("No solid surface for redstone torch: %s",
-                                        format(underRedstoneBlock)));
+                                if(customLogger.isDebugMode()) {
+                                    logDebug(String.format("No solid surface for redstone torch: %s",
+                                            format(underRedstoneBlock)));
+                                }
                                 continue;
                             }
 
                             if (!breakBlock(redstoneBlock, inventory)) {
-                                customLogger.debug(String.format("Can't break %s via %s for redstone torch",
-                                        format(redstoneBlock), format(inventory)));
+                                if(customLogger.isDebugMode()) {
+                                    logDebug(String.format("Can't break %s via %s for redstone torch",
+                                            format(redstoneBlock), format(inventory)));
+                                }
                                 continue;
                             }
 
@@ -216,8 +228,10 @@ public class MoveListener implements Listener {
             nextBlock.setType(rail.getType());
             rail.decrement();
 
-            customLogger.debug(String.format("Deployed %s with %s",
-                    format(nextBlock), format(inventory)));
+            if(customLogger.isDebugMode()) {
+                logDebug(String.format("Deployed %s with %s",
+                        format(nextBlock), format(inventory)));
+            }
         }
     }
 
@@ -358,6 +372,14 @@ public class MoveListener implements Listener {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private String lastDebugMessage = null;
+    private void logDebug(final String message) {
+        if(!message.equals(lastDebugMessage)) {
+            customLogger.debug(message);
+            lastDebugMessage = message;
         }
     }
 }
