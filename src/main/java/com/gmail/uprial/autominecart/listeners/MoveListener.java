@@ -132,16 +132,16 @@ public class MoveListener implements Listener {
 
             {
                 final Block underNextBlock = getBlockWithChangedY(nextBlock, -1);
-                if (!underNextBlock.getType().isSolid()) {
+                if (!isStable(underNextBlock.getType())) {
                     if (RAIL_TYPES.contains(underNextBlock.getType())) {
                         // Already deployed UNDER
                         return;
                     }
 
                     final Block underUnderNextBlock = getBlockWithChangedY(nextBlock, -2);
-                    if(!underUnderNextBlock.getType().isSolid()) {
+                    if(!isStable(underUnderNextBlock.getType())) {
                         if(customLogger.isDebugMode()) {
-                            logDebug(String.format("No solid surface for rails: %s and %s",
+                            logDebug(String.format("No stable surface for rails: %s and %s",
                                     format(underNextBlock), format(underUnderNextBlock)));
                         }
                         return;
@@ -198,12 +198,28 @@ public class MoveListener implements Listener {
 
                             final Block underRedstoneBlock = getBlockWithChangedY(redstoneBlock, -1);
 
-                            if (!underRedstoneBlock.getType().isSolid()) {
-                                if(customLogger.isDebugMode()) {
-                                    logDebug(String.format("No solid surface for redstone torch: %s",
-                                            format(underRedstoneBlock)));
+                            if (!isStable(underRedstoneBlock.getType())) {
+                                final InventoryItem surface = fetchInventory(inventory, (final ItemStack itemStack) ->
+                                        isStable(itemStack.getType()) ? 1 : null);
+
+                                if(surface == null) {
+                                    if (customLogger.isDebugMode()) {
+                                        logDebug(String.format("No stable surface for redstone torch: %s",
+                                                format(underRedstoneBlock)));
+                                    }
+                                    continue;
                                 }
-                                continue;
+
+                                if (!breakBlock(underRedstoneBlock, inventory)) {
+                                    if(customLogger.isDebugMode()) {
+                                        logDebug(String.format("Can't break %s via %s for redstone torch surface",
+                                                format(underRedstoneBlock), format(inventory)));
+                                    }
+                                    continue;
+                                }
+
+                                underRedstoneBlock.setType(surface.getType());
+                                surface.decrement();
                             }
 
                             if (!breakBlock(redstoneBlock, inventory)) {
@@ -214,7 +230,7 @@ public class MoveListener implements Listener {
                                 continue;
                             }
 
-                            redstoneBlock.setType(Material.REDSTONE_TORCH);
+                            redstoneBlock.setType(redstoneTorch.getType());
                             redstoneTorch.decrement();
 
                             rail = poweredRail;
@@ -233,6 +249,10 @@ public class MoveListener implements Listener {
                         format(nextBlock), format(inventory)));
             }
         }
+    }
+
+    private static boolean isStable(final Material material) {
+        return material.isSolid();
     }
 
     private static final Map<Material,Integer> CHEST_TOOLS = ImmutableMap.<Material,Integer>builder()
