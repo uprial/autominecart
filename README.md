@@ -15,8 +15,8 @@ If a chest minecart is moving and there is a solid block in the direction of mov
 2. If found, try to break two blocks with the pickaxe in the direction of movement and drop the broken blocks on the floor.
 3. Look for a left-top rails in the chest.
 4. If found, try to place the rails in the direction of movement - if can't, stop.
-6. Check if the minecart X or Z is a multiple of 16, the chest has a red torch and a powered rail inside, there is a solid block under the right side or the left side
-7. If passed, break the solid block, put the red torch instead of it, put the powered rail instead of the rails, drop broken blocks on the floor.
+5. Check if the minecart X or Z is a multiple of 16, the chest has a red torch and a powered rail inside, there is a solid block under the right side or the left side
+6. If passed, break the solid block, put the red torch instead of it, put the powered rail instead of the rails, drop broken blocks on the floor.
 
 ![a minecraft picture a chest minecart stays on a railway with a pickaxe in direction of the railway](images/autominecart-promo.png)
 
