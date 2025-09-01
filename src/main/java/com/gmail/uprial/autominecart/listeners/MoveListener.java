@@ -175,7 +175,7 @@ public class MoveListener implements Listener {
                 }
             }
 
-            if((nextBlock.getX() % 16 == 0) || (nextBlock.getZ() % 16 == 0)) {
+            if(isPoweredRailBlock(nextBlock, minecartDirection)) {
                 final InventoryItem poweredRail = fetchInventory(inventory, Material.POWERED_RAIL);
 
                 // Inventory has powered rails
@@ -251,6 +251,15 @@ public class MoveListener implements Listener {
             }
         }
     }
+
+    private static boolean isPoweredRailBlock(final Block block, final Vector direction) {
+        if(Math.abs(direction.getX()) > Math.abs(direction.getZ())) {
+            return block.getX() % 16 == 0;
+        } else {
+            return block.getZ() % 16 == 0;
+        }
+    }
+
 
     private static boolean isStable(final Material material) {
         return material.isSolid();
