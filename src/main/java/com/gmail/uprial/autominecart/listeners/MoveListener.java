@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableSet;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Rail;
+import org.bukkit.block.data.Waterlogged;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
@@ -370,6 +371,20 @@ public class MoveListener implements Listener {
         return (topId != null) ? new InventoryItem(inventory, topId) : null;
     }
 
+    private static void wither(final Block block) {
+        if (block.getBlockData() instanceof Waterlogged) {
+                /*
+                    According to https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html#WATER,
+                    Material.WATER BlockData is Levelled but not Waterlogged
+                 */
+            final Waterlogged waterlogged = (Waterlogged) block.getBlockData();
+            if (waterlogged.isWaterlogged()) {
+                waterlogged.setWaterlogged(false);
+                block.setBlockData(waterlogged);
+            }
+        }
+    }
+
     /*
         According to https://minecraft.wiki/w/Breaking#Blocks_by_hardness,
         the most critical blocks have hardness at least 4.5.
@@ -377,7 +392,12 @@ public class MoveListener implements Listener {
     private static final float MAX_BLOCK_HARDNESS = 4.6f;
 
     private static boolean breakBlock(final Block block, final Inventory inventory) {
-        if (block.isEmpty() || block.isLiquid()) {
+        if (block.isEmpty()) {
+            wither(block);
+            return true;
+        } else if (block.isLiquid()) {
+            block.setType(Material.AIR);
+            wither(block);
             return true;
         } else if (block.getType().getHardness() > MAX_BLOCK_HARDNESS) {
             return false;
@@ -389,6 +409,7 @@ public class MoveListener implements Listener {
             return false;
         } else if(block.breakNaturally(tool.getItem())) {
             tool.damage();
+            wither(block);
             return true;
         } else {
             return false;
