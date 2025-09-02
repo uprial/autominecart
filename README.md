@@ -19,7 +19,8 @@ If a chest minecart is moving and there is a solid block in the direction of mov
 6. If not found, look for a left-top solid block in the chest and place it under the right side
 7. If the solid block under the side is found or placed, try to break a block on it, put the red torch there, put the powered rail instead of the rails, and drop broken blocks on the floor.
 
-![a minecraft picture a chest minecart stays on a railway with a pickaxe in direction of the railway](images/autominecart-promo.png)
+A chest minecart needs the following inventory to build a 1000 block distance railway:
+![a 1000 blocks set](images/a-1000-blocks-set.png)
 
 ## Commands
 
