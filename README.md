@@ -11,13 +11,14 @@ A Minecraft (Bukkit) plugin that allows to minecarts to auto-build their rails
 ## Features
 
 If a chest minecart is moving and there is a solid block in the direction of movement.
-1. Look for a best pickaxe in the chest.
-2. If found, try to break two blocks with the pickaxe in the direction of movement and drop the broken blocks on the floor.
-3. Look for a left-top rails in the chest.
-4. If found, try to place the rails in the direction of movement - if can't, stop moving.
-5. If the minecart X or Z is a multiple of 16, the chest has a red torch and a powered rail inside, try to find a solid block under the right side or the left side
-6. If not found, look for a left-top solid block in the chest and place it under the right side
-7. If the solid block under the side is found or placed, try to break a block on it, put the red torch there, put the powered rail instead of the rails, and drop broken blocks on the floor.
+1. Break two blocks in the direction of movement with the best pickaxe from the chest - or fail
+2. Place the left-top regular rail from the chest in the direction of movement - or fail
+3. If the minecart X or Z is NOT a multiple of 16 - finish
+4. Break the right side block - or go to #7
+5. If no solid block under right side, place the left-top solid block from the chest - or go to #7
+6. Place the left-top redstone torch from the chest to the right side - or go to #7
+7. If #4, or #5, or #6 didn't work for the right side, try for the left side - or fail
+8. Place the left-top powered rail from the chest instead of the regular rail - or fail
 
 A chest minecart needs the following inventory to build a 1000 block distance railway:
 ![a 1000 blocks set](images/a-1000-blocks-set.png)
